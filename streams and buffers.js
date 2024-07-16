@@ -1,0 +1,1 @@
+// Start using data,  before it has finished loading
