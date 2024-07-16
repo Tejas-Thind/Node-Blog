@@ -8,8 +8,6 @@ fs.readFile('./docs/blog1.txt', (err, data) => { //async function runs function 
     console.log(data.toString());
 });
 
-console.log('last line'); // this will fire before the above console.log
-
 // Writing files
 fs.writeFile('./docs/blog1.txt', 'hello world', () => { // also async
     console.log('file was written')
@@ -18,9 +16,23 @@ fs.writeFile('./docs/blog1.txt', 'hello world', () => { // also async
 // creates file if it doesn't exist
 
 // Directories
-fs.mkdir('./assets', ( err)=> {
-    if (err) {
-        console.log(err)
-    }
-    console.log('folder created');
-}); // async also 
+if (!fs.existsSync('./assets')) {
+    fs.mkdir('./assets', ( err)=> { // async also 
+        if (err) {
+            console.log(err)
+        }
+        console.log('folder created');
+    });
+} else {
+    fs.rmdir('./assets', (err) => {
+        if (err) {
+            console.log(err);
+        }
+        console.log('folder deleted');
+    });
+}
+
+// Deleting files
+if (fs.existsSync('./docs/deleteme.txt')) {
+
+}
