@@ -10,4 +10,7 @@ readStream.on('data', (chunk) => { // this is an event listener, listening to a 
     console.log(chunk);
     writeStream.write('\nNEW CHUNK\n')
     writeStream.write(chunk);
-})
+});
+
+// piping
+readStream.pipe(writeStream); // same thing as above but shorter
