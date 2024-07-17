@@ -3,7 +3,12 @@ const fs = require('fs');
 const _ = require('lodash');
 
 const server = http.createServer((req, res) => {
-    console.log(req.url, req.method);
+    //
+const num = _.random(0, 20); // random number between 0 and 20
+
+const greet = _.once(() => { // _.once() only allows function to be ran once
+    console.log('Hello');
+});
 
     // set header content type
     res.setHeader('Content-Type', 'text/html'); // what type of content we are sending
