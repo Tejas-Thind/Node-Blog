@@ -4,13 +4,15 @@ const morgan = require('morgan');
 // express app
 const app = express();
 
-// listen for requests
-app.listen(3000);
-
 // register view engine
 app.set("view engine", "ejs");
 
-app.use(morgan('dev'));
+// listen for requests
+app.listen(3000);
+
+// middleware and static files
+app.use(express.static('public')) // pass a folder for any files inside to be made accesible to the front end
+app.use(morgan('dev')); // using middleware to log info to the console about the request made
 
 app.get("/", (req, res) => {
   const blogs = [
