@@ -1,28 +1,33 @@
-const express = require("express");
+const express = require('express');
 
 // express app
 const app = express();
 
-// ergister view engine
-app.set("view engine", "ejs");
-
 // listen for requests
 app.listen(3000);
 
-app.get("/", (req, res) => {
-  res.render("index");
+// register view engine
+app.set('view engine', 'ejs');
+// app.set('views', 'myviews');
+
+app.get('/', (req, res) => {
+  const blogs = [
+    {title: 'Yoshi finds eggs', snippet: 'Lorem ipsum dolor sit amet consectetur'},
+    {title: 'Mario finds stars', snippet: 'Lorem ipsum dolor sit amet consectetur'},
+    {title: 'How to defeat bowser', snippet: 'Lorem ipsum dolor sit amet consectetur'},
+  ];
+  res.render('index', { title: 'Home', blogs: blogs });
 });
 
-app.get("/about", (req, res) => {
-  res.render("about");
+app.get('/about', (req, res) => {
+  res.render('about', { title: 'About' });
 });
 
-app.get("/blogs/create", (req, res) => {
-  res.render("create");
+app.get('/blogs/create', (req, res) => {
+  res.render('create', { title: 'Create a new blog' });
 });
 
 // 404 page
 app.use((req, res) => {
-  // fire for every single request coming in but only if it reaches this point in the code
-  res.status(404).render("404");
+  res.status(404).render('404', { title: '404' });
 });
