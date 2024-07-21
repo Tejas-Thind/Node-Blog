@@ -2,6 +2,7 @@ const express = require("express");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const Blog = require("./models/blog");
+const { escapeRegExp } = require("lodash");
 
 // express app
 const app = express();
@@ -23,46 +24,24 @@ app.set("view engine", "ejs");
 app.use(express.static("public")); // pass a folder for any files inside to be made accessible to the front end
 app.use(morgan("dev")); // using middleware to log info to the console about the request made
 
-// mongoose sandbox
-app.get("/add-blog", (req, res) => {
-  const blog = new Blog({
-    title: "New Blog",
-    snippet: "About my new blog",
-    body: "more about my new blog",
-  }); // New instance of blog document and pass a object with properties
-
-  blog
-    .save()
-    .then((result) => {
-      res.send(result);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
-
-
-
 app.get("/", (req, res) => {
-  const blogs = [
-    {
-      title: "Yoshi finds eggs",
-      snippet: "Lorem ipsum dolor sit amet consectetur",
-    },
-    {
-      title: "Mario finds stars",
-      snippet: "Lorem ipsum dolor sit amet consectetur",
-    },
-    {
-      title: "How to defeat bowser",
-      snippet: "Lorem ipsum dolor sit amet consectetur",
-    },
-  ];
-  res.render("index", { title: "Home", blogs: blogs });
+  res.redirect("/blogs");
 });
 
 app.get("/about", (req, res) => {
   res.render("about", { title: "About" });
+});
+
+// blog routes
+app.get("/blogs", (req, res) => {
+  Blog.find()
+    .sort({ createdAt: -1 })
+    .then((result) => {
+      res.render("index", { blogs: result, title: "All blogs" });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 app.get("/blogs/create", (req, res) => {
