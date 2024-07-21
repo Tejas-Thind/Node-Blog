@@ -1,7 +1,7 @@
 const express = require("express");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
-const Blog = require('./models/blog');
+const Blog = require("./models/blog");
 
 // express app
 const app = express();
@@ -24,9 +24,24 @@ app.use(express.static("public")); // pass a folder for any files inside to be m
 app.use(morgan("dev")); // using middleware to log info to the console about the request made
 
 // mongoose sandbox
-app.get('/add-blog',(req, res) => {
-  const blog = new Blog(); // New instance of blog document and pass a object with properties
+app.get("/add-blog", (req, res) => {
+  const blog = new Blog({
+    title: "New Blog",
+    snippet: "About my new blog",
+    body: "more about my new blog",
+  }); // New instance of blog document and pass a object with properties
+
+  blog
+    .save()
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
+
+
 
 app.get("/", (req, res) => {
   const blogs = [
