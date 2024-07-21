@@ -4,6 +4,8 @@ const morgan = require('morgan');
 // express app
 const app = express();
 
+const dbURI = 'mongodb+srv://tejasst0544:Mongo44@cluster0.jjf6s6z.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
+
 // register view engine
 app.set("view engine", "ejs");
 
