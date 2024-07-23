@@ -1,4 +1,5 @@
 const express = require("express");
+const Blog = require("./models/blog");
 
 const router = express.Router();
 
@@ -104,3 +105,5 @@ router.delete("/blogs/:id", (req, res) => {
       console.log(err);
     });
 });
+
+module.exports = router;
