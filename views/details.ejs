@@ -3,13 +3,30 @@
   <body>
     <%- include('./partials/nav.ejs') %>
 
-    <div class="blogs content">
+    <div class="blogs details">
       <h2><%= blog.title %></h2>
-      <div class="content">
+      <div class="details">
         <p><%= blog.body %></p>
       </div>
       <a class="delete" data-doc="<%= blog._id %>">Delete</a>
     </div>
     <%- include('./partials/footer.ejs') %>
+
+    <script>
+      const trashcan = document.querySelector('a.delete');
+      trashcan.addEventListener('click', (e) => {
+        const endpoint = `/blogs/${trashcan.dataset.doc}`;
+
+        fetch(endpoint, {
+          method: 'DELETE'
+        })
+        .then(result = > {
+
+        })
+        .catch(err = > {
+          console.log(err)
+        });
+      })
+    </script>
   </body>
 </html>
