@@ -22,6 +22,7 @@ app.set("view engine", "ejs");
 
 // middleware and static files
 app.use(express.static("public")); // pass a folder for any files inside to be made accessible to the front end
+app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev")); // using middleware to log info to the console about the request made
 
 app.get("/", (req, res) => {
@@ -42,6 +43,28 @@ app.get("/blogs", (req, res) => {
     .catch((err) => {
       console.log(err);
     });
+});
+
+app.post('/blogs', (req, res) => {
+  const blog = new Blog(req.body);
+  blog.save() // async
+  .then((result) => {
+    res.redirect('/blogs')
+  })
+  .catch(err => {
+    console.log(err);
+  })
+});
+
+app.get('/blogs/:id', (req, res) => {
+  const id = req.params.id;
+  Blog.findById(id)
+  .then(result => {
+    res.render('details', {blog: result, title: 'Blog Details'})
+  })
+  .catch(err => {
+    console.log(err);
+  })
 });
 
 app.get("/blogs/create", (req, res) => {
