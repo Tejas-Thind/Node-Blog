@@ -14,6 +14,7 @@ mongoose
   .connect(dbURI)
   .then((result) => app.listen(3000))
   .catch((err) => console.log(err));
+  console.log('Connected to DB');
 
 // register view engine
 app.set("view engine", "ejs");
@@ -27,7 +28,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// routes
+// Routes
 app.get("/", (req, res) => {
   res.redirect("/blogs");
 });
